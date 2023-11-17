@@ -27,12 +27,11 @@ def main():
         decryptedBlock = str(pow(int(i), PrivateKeyD, PrivateKeyN))
 
         # Split the decrypted block into pairs of two characters
-        pairs = split_string(decryptedBlock, 2)
-
+        pairs = split_string(str(decryptedBlock).zfill(4), 2)
         # Convert each pair to its corresponding letter using the alphabet library
         for pair in pairs:
             decodedMessage += alphabet_library[pair]
-
+            
     print(decodedMessage)
 
 main()
