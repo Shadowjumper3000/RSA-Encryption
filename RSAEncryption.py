@@ -2,7 +2,7 @@ def create_alphabet_library():
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     library = {}
     for i, letter in enumerate(alphabet):
-        library[letter] = str(i).zfill(2)
+        library[letter] = str(i + 1).zfill(2)
     return library
 
 def main():
@@ -45,6 +45,7 @@ def main():
     # Encode the message
     encodedMessage = ""
     for b in blocks:
+        
         # Convert the block to an integer
         blockInt = int(b)
 
@@ -57,7 +58,7 @@ def main():
         encodedBlock = pow(blockInt, publicKeyE, publicKeyN)
 
         # Append the encoded block to the encoded message
-        encodedMessage += str(encodedBlock).zfill(4)
+        encodedMessage += str(encodedBlock).zfill(k)
 
     print(encodedMessage)
 

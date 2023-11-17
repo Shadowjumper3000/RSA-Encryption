@@ -2,7 +2,7 @@ def create_alphabet_library():
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     library = {}
     for i, letter in enumerate(alphabet):
-        library[str(i).zfill(2)] = letter
+        library[str(i + 1).zfill(2)] = letter
     return library
 
 def split_string(string, n):
@@ -28,10 +28,13 @@ def main():
 
         # Split the decrypted block into pairs of two characters
         pairs = split_string(str(decryptedBlock).zfill(4), 2)
+
         # Convert each pair to its corresponding letter using the alphabet library
         for pair in pairs:
-            decodedMessage += alphabet_library[pair]
+            if pair != '00':
+                decodedMessage += alphabet_library[pair]
             
+
     print(decodedMessage)
 
 main()
