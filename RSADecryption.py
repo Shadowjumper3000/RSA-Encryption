@@ -1,5 +1,5 @@
 def create_alphabet_library():
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '
     library = {}
     for i, letter in enumerate(alphabet):
         library[str(i + 1).zfill(2)] = letter

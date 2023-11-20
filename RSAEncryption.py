@@ -1,5 +1,5 @@
 def create_alphabet_library():
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '
     library = {}
     for i, letter in enumerate(alphabet):
         library[letter] = str(i + 1).zfill(2)
@@ -14,7 +14,7 @@ def main():
     publicKeyE = int(input("Enter e: "))
 
     # Take input for the raw message
-    rawMessage = input("Input your message here: ").replace(" ", "").lower()
+    rawMessage = input("Input your message here: ")
 
     # Check if the message is empty
     if len(rawMessage) == 0:
