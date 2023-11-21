@@ -1,17 +1,13 @@
-def create_alphabet_library():
-    alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '
-    library = {}
-    for i, letter in enumerate(alphabet):
-        library[letter] = str(i + 1).zfill(2)
-    return library
 
 def main():
-    # Create Alphabet Library
-    alphabet_library = create_alphabet_library()
+    alphabet = 'abcdefghijklmnopqrstuvwxyz '
+    library = {}
+    for i, letter in enumerate(alphabet):
+        library[letter] = str(i+1).zfill(2)
 
     # Take input for public key values
-    publicKeyN = int(input("Enter n: "))
-    publicKeyE = int(input("Enter e: "))
+    PublicKeyN = int(input("Enter n: "))
+    PublicKeyE = int(input("Enter e: "))
 
     # Take input for the raw message
     rawMessage = input("Input your message here: ")
@@ -24,19 +20,19 @@ def main():
     # Convert the message to a string of numbers
     numericMessage = ""
     for char in rawMessage:
-        if char in alphabet_library:
-            numericMessage += alphabet_library[char]
+        if char in library:
+            numericMessage += library[char]
         else:
             print(f"Error: Character '{char}' not in the alphabet!")
             exit()
 
     # Calculate the block size
     k = 0
-    l = "25"
-    while int(l) <= publicKeyN:
-        l += "25"
+    l = str(len(library))
+    while int(l) <= PublicKeyN:
+        l += str(len(library))
         k += 2
-        if int(l) > publicKeyN:
+        if int(l) > PublicKeyN:
             break
 
     # Split the message into blocks
@@ -45,17 +41,17 @@ def main():
     # Encode the message
     encodedMessage = ""
     for b in blocks:
-        
+
         # Convert the block to an integer
         blockInt = int(b)
 
         # Check if the block value exceeds the public key modulus
-        if blockInt >= publicKeyN:
+        if blockInt >= PublicKeyN:
             print("Error: Block value exceeds the public key modulus!")
             exit()
 
         # Perform RSA encryption
-        encodedBlock = pow(blockInt, publicKeyE, publicKeyN)
+        encodedBlock = pow(blockInt, PublicKeyE, PublicKeyN)
 
         # Append the encoded block to the encoded message
         encodedMessage += str(encodedBlock).zfill(k)

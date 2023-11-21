@@ -5,4 +5,4 @@ PrivateKeyD = 1181
 PrivateKeyN = 6059
 print(str(pow(int(i), PrivateKeyD, PrivateKeyN)))
 
-print((i**1181))
+print(len("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "))
