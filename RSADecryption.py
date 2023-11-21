@@ -7,7 +7,7 @@ def main():
     alphabet = 'abcdefghijklmnopqrstuvwxyz '
     library = {}
     for i, letter in enumerate(alphabet):
-        library[str(i)] = letter
+        library[str(i+1).zfill(2)] = letter
 
     # Get Private Key
     PrivateKeyN = int(input("Enter n: "))

@@ -3,7 +3,7 @@ def main():
     alphabet = 'abcdefghijklmnopqrstuvwxyz '
     library = {}
     for i, letter in enumerate(alphabet):
-        library[letter] = str(i)
+        library[letter] = str(i+1).zfill(2)
 
     # Take input for public key values
     PublicKeyN = int(input("Enter n: "))
@@ -36,7 +36,6 @@ def main():
             break
 
     # Split the message into blocks
-    print(numericMessage)
     blocks = [numericMessage[i:i + k] for i in range(0, len(numericMessage), k)]
 
     # Encode the message
