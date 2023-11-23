@@ -1,9 +1,8 @@
-
 def main():
     alphabet = 'abcdefghijklmnopqrstuvwxyz '
     library = {}
     for i, letter in enumerate(alphabet):
-        library[letter] = str(i+1).zfill(2)
+        library[letter] = str(i).zfill(2)
 
     # Take input for public key values
     PublicKeyN = int(input("Enter n: "))
@@ -37,12 +36,14 @@ def main():
 
     # Split the message into blocks
     blocks = [numericMessage[i:i + k] for i in range(0, len(numericMessage), k)]
-
+    print(blocks)
     # Encode the message
     encodedMessage = ""
     for b in blocks:
 
         # Convert the block to an integer
+        if len(b) < 3:
+            b += str(len(alphabet)+1)
         blockInt = int(b)
 
         # Check if the block value exceeds the public key modulus
@@ -51,10 +52,10 @@ def main():
             exit()
 
         # Perform RSA encryption
-        encodedBlock = pow(blockInt, PublicKeyE, PublicKeyN)
+        encodedBlock = str(pow(blockInt, PublicKeyE, PublicKeyN))
 
         # Append the encoded block to the encoded message
-        encodedMessage += str(encodedBlock).zfill(k)
+        encodedMessage += encodedBlock.zfill(k)
 
     print(encodedMessage)
 

@@ -7,7 +7,7 @@ def main():
     alphabet = 'abcdefghijklmnopqrstuvwxyz '
     library = {}
     for i, letter in enumerate(alphabet):
-        library[str(i+1).zfill(2)] = letter
+        library[str(i).zfill(2)] = letter
 
     # Get Private Key
     PrivateKeyN = int(input("Enter n: "))
@@ -37,10 +37,9 @@ def main():
 
         # Convert each pair to its corresponding letter using the alphabet library
         for pair in pairs:
-            if pair != '00':
+            if pair != str(len(alphabet)+1):
                 decodedMessage += library[pair]
             
-
     print(decodedMessage)
 
 main()
