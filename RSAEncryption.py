@@ -36,7 +36,7 @@ def main():
 
     # Split the message into blocks
     blocks = [numericMessage[i:i + k] for i in range(0, len(numericMessage), k)]
-    print(blocks)
+
     # Encode the message
     encodedMessage = ""
     for b in blocks:
