@@ -1,7 +1,5 @@
 # RSA Encryption - Discrete Mathematics Final Project
 
-This is the final project for the Discrete Mathematics course with Simon Izasa. The project focuses on implementing RSA encryption, a widely used cryptographic algorithm, in Python.
-
 ## Project Files
 
 The project consists of three Python files:
