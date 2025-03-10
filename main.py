@@ -33,10 +33,27 @@ def main():
 
         elif choice == "2":
             alphabet = get_alphabet()
-            rsa_encrypt(alphabet)
+            modulus = int(input("Enter n: "))
+            public_exponent = int(input("Enter e: "))
+            message = input("Input your message here: ")
+            try:
+                encrypted = rsa_encrypt(alphabet, modulus, public_exponent, message)
+                print(f"\nEncrypted message: {encrypted}")
+            except ValueError as e:
+                print(f"Error: {e}")
 
         elif choice == "3":
-            rsa_decrypt()
+            alphabet = get_alphabet()
+            modulus = int(input("Enter n: "))
+            private_exponent = int(input("Enter d: "))
+            encrypted_message = input("Enter encrypted message: ")
+            try:
+                decrypted = rsa_decrypt(
+                    alphabet, modulus, private_exponent, encrypted_message
+                )
+                print(f"\nDecrypted message: {decrypted}")
+            except ValueError as e:
+                print(f"Error: {e}")
 
         elif choice == "4":
             print("Goodbye!")

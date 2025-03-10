@@ -1,65 +1,63 @@
 """
 RSA Encryption
-This program encrypts a message using RSA encryption. The user is prompted to enter the public key (n, e) and the raw message. The program then encrypts the message and outputs the encoded message.
+This program encrypts a message using RSA encryption. The user is prompted to enter
+the public key (n, e) and the raw message. The program then encrypts the message
+and outputs the encoded message.
 """
 
-def rsa_encrypt(alphabet):
-    library = {}
-    for i, letter in enumerate(alphabet):
-        library[letter] = str(i).zfill(2)
 
-    # Take input for public key values
-    PublicKeyN = int(input("Enter n: "))
-    PublicKeyE = int(input("Enter e: "))
+def calculate_block_size(modulus: int, alphabet_length: int) -> int:
+    """
+    Calculate the maximum safe block size for the given modulus.
 
-    # Take input for the raw message
-    rawMessage = input("Input your message here: ")
+    Args:
+        modulus (int): The RSA modulus (n)
+        alphabet_length (int): Length of the alphabet being used
 
-    # Check if the message is empty
-    if len(rawMessage) == 0:
-        print("Error: Empty message!")
-        exit()
+    Returns:
+        int: Maximum safe block size in digits
+    """
+    block_size = 2
+    while True:
+        test_value = int("9" * block_size)
+        if test_value >= modulus:
+            return block_size - 2
+        block_size += 2
 
-    # Convert the message to a string of numbers
-    numericMessage = ""
-    for char in rawMessage:
-        if char in library:
-            numericMessage += library[char]
-        else:
-            print(f"Error: Character '{char}' not in the alphabet!")
-            exit()
 
-    # Calculate the block size
-    k = 0
-    l = str(len(library))
-    while int(l) <= PublicKeyN:
-        l += str(len(library))
-        k += 2
-        if int(l) > PublicKeyN:
-            break
+def rsa_encrypt(alphabet: str, modulus: int, public_exponent: int, message: str) -> str:
+    """Encrypt a message using RSA."""
+    # Create character-to-number mapping
+    char_to_num_map = {char: str(i).zfill(2) for i, char in enumerate(alphabet)}
 
-    # Split the message into blocks
-    blocks = [numericMessage[i:i + k] for i in range(0, len(numericMessage), k)]
+    if len(message) == 0:
+        raise ValueError("Error: Empty message!")
 
-    # Encode the message
-    encodedMessage = ""
-    for b in blocks:
+    # Convert message to numeric form
+    numeric_message = ""
+    for char in message:
+        if char not in char_to_num_map:
+            raise ValueError(f"Error: Character '{char}' not in the alphabet!")
+        numeric_message += char_to_num_map[char]
 
-        # Convert the block to an integer
-        if len(b) < 3:
-            b += str(len(alphabet)+1)
-        blockInt = int(b)
+    # Calculate safe block size
+    block_size = calculate_block_size(modulus, len(alphabet))
 
-        # Check if the block value exceeds the public key modulus
-        if blockInt >= PublicKeyN:
-            print("Error: Block value exceeds the public key modulus!")
-            exit()
+    # Split message into blocks
+    blocks = [
+        numeric_message[i : i + block_size]
+        for i in range(0, len(numeric_message), block_size)
+    ]
 
-        # Perform RSA encryption
-        encodedBlock = str(pow(blockInt, PublicKeyE, PublicKeyN))
+    # Encrypt each block
+    encrypted_blocks = []
+    for block in blocks:
+        if len(block) < block_size:
+            block = block.ljust(block_size, "0")  # Pad with zeros
+        block_value = int(block)
+        if block_value >= modulus:
+            raise ValueError("Error: Block value exceeds modulus!")
+        encrypted_block = pow(block_value, public_exponent, modulus)
+        encrypted_blocks.append(str(encrypted_block).zfill(block_size))
 
-        # Append the encoded block to the encoded message
-        encodedMessage += encodedBlock.zfill(k)
-
-    print(encodedMessage)
-
+    return "".join(encrypted_blocks)

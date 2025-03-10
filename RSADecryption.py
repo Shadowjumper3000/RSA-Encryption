@@ -1,51 +1,79 @@
 """
-This program decrypts a message using RSA encryption.
-The user is prompted to enter the private key (n, d)
-and the encoded message.
-The program then decrypts the message and outputs the original message.
+RSA Decryption
+This program decrypts a message using RSA decryption.
+The user provides:
+1. Private key components (n, d)
+2. Encrypted message
+The program outputs the original decrypted message.
 """
 
-def split_string(string, n):
-    return [string[i:i+n] for i in range(0, len(string), n)]
 
-def rsa_decrypt():
-    # Create Alphabet Library
-    alphabet = 'abcdefghijklmnopqrstuvwxyz '
-    library = {}
-    for i, letter in enumerate(alphabet):
-        library[str(i).zfill(2)] = letter
+def split_into_chunks(text: str, chunk_size: int) -> list:
+    """
+    Split a string into chunks of specified size.
 
-    # Get Private Key
-    PrivateKeyN = int(input("Enter n: "))
-    PrivateKeyD = int(input("Enter d: "))
+    Args:
+        text (str): String to split
+        chunk_size (int): Size of each chunk
 
-    # Calculate the block size
-    k = 0
-    l = str(len(library))
-    while int(l) <= PrivateKeyN:
-        l += str(len(library))
-        k += 2
-        if int(l) > PrivateKeyN:
-            break
+    Returns:
+        list: List of string chunks
+    """
+    return [text[i : i + chunk_size] for i in range(0, len(text), chunk_size)]
 
-    # Get encoded message as list of ints
-    encodedMessage = [str(i) for i in input("Enter encoded message: ").split()]
-    if len(encodedMessage[0]) > k:
-        encodedMessage = [int(encodedMessage[0][i:i+k]) for i in range(0, len(encodedMessage[0]), k)]
 
-    decodedMessage = ""
-    for i in encodedMessage:
-        # Decrypt the block and convert it to a string
-        decryptedBlock = str(pow(int(i), PrivateKeyD, PrivateKeyN))
+def calculate_block_size(modulus: int, alphabet_length: int) -> int:
+    """
+    Calculate the maximum safe block size for the given modulus.
 
-        # Split the decrypted block into pairs of two characters
-        pairs = split_string(str(decryptedBlock).zfill(4), 2)
+    Args:
+        modulus (int): The RSA modulus (n)
+        alphabet_length (int): Length of the alphabet being used
 
-        # Convert each pair to its corresponding letter using the alphabet library
-        for pair in pairs:
-            if pair != str(len(alphabet)+1):
-                decodedMessage += library[pair]
-            
-    print(decodedMessage)
+    Returns:
+        int: Maximum safe block size in digits
+    """
+    block_size = 2
+    while True:
+        test_value = int("9" * block_size)
+        if test_value >= modulus:
+            return block_size - 2
+        block_size += 2
 
-main()
+
+def rsa_decrypt(
+    alphabet: str, modulus: int, private_exponent: int, encrypted_message: str
+) -> str:
+    """Decrypt an RSA encrypted message."""
+    # Create number-to-character mapping
+    num_to_char_map = {str(i).zfill(2): char for i, char in enumerate(alphabet)}
+
+    # Calculate block size
+    block_size = calculate_block_size(modulus, len(alphabet))
+
+    try:
+        # Split encrypted message into blocks
+        encrypted_blocks = [
+            encrypted_message[i : i + block_size]
+            for i in range(0, len(encrypted_message), block_size)
+        ]
+
+        # Decrypt blocks
+        decrypted_message = ""
+        for block in encrypted_blocks:
+            block_value = int(block)
+            decrypted_block = str(pow(block_value, private_exponent, modulus))
+            decrypted_block = decrypted_block.zfill(block_size)
+
+            # Convert pairs of digits back to characters
+            for i in range(0, len(decrypted_block), 2):
+                pair = decrypted_block[i : i + 2]
+                if pair in num_to_char_map:
+                    decrypted_message += num_to_char_map[pair]
+
+        # Remove padding added during encryption
+        decrypted_message = decrypted_message.rstrip("0")
+        return decrypted_message
+
+    except (ValueError, KeyError) as e:
+        raise ValueError(f"Decryption failed: {str(e)}")

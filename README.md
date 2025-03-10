@@ -1,26 +1,60 @@
-# RSA Encryption - Discrete Mathematics Final Project
+# RSA Encryption System
 
-## Project Files
+A Python implementation of RSA encryption that demonstrates public-key cryptography concepts.
 
-The project consists of three Python files:
+## Features
 
-1. [RSAKeyGeneration.py](https://github.com/Shadowjumper3000/RSA-Encryption/edit/main/README.md): This file is responsible for generating a public and private key pair using two given prime numbers. The public key can be used for encryption, while the private key is used for decryption.
-
-2. [RSAEncryption.py](https://github.com/Shadowjumper3000/RSA-Encryption/edit/main/README.md): This file implements the encryption process using a given public key. It can encrypt any given message, including capital letters, whitespaces, and numbers.
-
-3. [RSADecryption.py](https://github.com/Shadowjumper3000/RSA-Encryption/edit/main/README.md): This file handles the decryption process using the corresponding private key. It can decrypt any encrypted message.
+- Generate RSA key pairs
+- Encrypt messages using public keys
+- Decrypt messages using private keys
+- Support for:
+  - Lowercase letters
+  - Capital letters (optional)
+  - Numbers (optional)
+  - Spaces
 
 ## Usage
 
-To use the project, follow these steps:
+Run the main program:
+```bash
+python main.py
+```
 
-1. Run the [RSAKeyGeneration.py](https://github.com/Shadowjumper3000/RSA-Encryption/edit/main/README.md) file to generate a public and private key pair.
+The program provides an interactive menu with these options:
+1. Generate Key Pair - Creates new public/private key pair
+2. Encrypt Message - Encrypts text using a public key
+3. Decrypt Message - Decrypts text using a private key
+4. Exit
 
-2. Use the generated public key to encrypt a message by running the [RSAEncryption.py](https://github.com/Shadowjumper3000/RSA-Encryption/edit/main/README.md) file.
+## Project Structure
 
-3. To decrypt the encrypted message, use the corresponding private key by running the [RSADecryption.py](https://github.com/Shadowjumper3000/RSA-Encryption/edit/main/README.md)file.
+- [`main.py`](main.py) - Main interface and menu system
+- [`RSAKeyGeneration.py`](RSAKeyGeneration.py) - Handles key pair generation
+- [`RSAEncryption.py`](RSAEncryption.py) - Implements message encryption
+- [`RSADecryption.py`](RSADecryption.py) - Implements message decryption
 
-Please note that the project assumes basic knowledge of Python programming and the RSA encryption algorithm.
+## Running Tests
 
+```bash
+python -m unittest test_rsa.py -v
+```
 
-- **License**: Free use, do whatever you want with it.
+## Technical Details
+
+The implementation includes:
+- Prime number validation
+- GCD calculation for key generation
+- Modular exponentiation for encryption/decryption
+- Block-based message processing
+
+## Requirements
+
+- Python 3.6+
+
+## License
+
+Free use - do whatever you want with it.
+
+## Notes
+
+This is an educational project demonstrating RSA concepts. Not recommended for production use.
