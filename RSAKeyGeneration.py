@@ -1,4 +1,20 @@
+"""
+RSA Key Generation
+This program generates a pair of RSA keys.
+The user is prompted to enter two prime numbers,
+and the program generates the public and private keys based on these numbers.
+"""
+
 def is_prime(n):
+    """
+    Check if a number is prime.
+
+    Args:
+        n (int): Number to check for primality
+
+    Returns:
+        bool: True if the number is prime, False otherwise
+    """
     if n <= 1:
         return False
     for i in range(2, int(n**0.5) + 1):
@@ -7,11 +23,22 @@ def is_prime(n):
     return True
 
 def gcd(a, b):
+    """
+    Calculate the Greatest Common Divisor of two numbers using
+    the Euclidean algorithm.
+
+    Args:
+        a (int): First number
+        b (int): Second number
+
+    Returns:
+        int: Greatest Common Divisor of a and b
+    """
     while b:
         a, b = b, a % b
     return a
 
-def main():
+def generate_keys():
     # Get Prime Values
     PrimeOne = int(input("Enter first Prime number: "))
     PrimeTwo = int(input("Enter second Prime number: "))
@@ -40,4 +67,4 @@ def main():
     print("Private Key: ")
     print(privateKey)
 
-main()
+    return publicKey, privateKey

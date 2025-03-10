@@ -1,8 +1,14 @@
+"""
+This program decrypts a message using RSA encryption.
+The user is prompted to enter the private key (n, d)
+and the encoded message.
+The program then decrypts the message and outputs the original message.
+"""
 
 def split_string(string, n):
     return [string[i:i+n] for i in range(0, len(string), n)]
 
-def main():
+def rsa_decrypt():
     # Create Alphabet Library
     alphabet = 'abcdefghijklmnopqrstuvwxyz '
     library = {}

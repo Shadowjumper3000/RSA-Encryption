@@ -1,5 +1,9 @@
-def main():
-    alphabet = 'abcdefghijklmnopqrstuvwxyz '
+"""
+RSA Encryption
+This program encrypts a message using RSA encryption. The user is prompted to enter the public key (n, e) and the raw message. The program then encrypts the message and outputs the encoded message.
+"""
+
+def rsa_encrypt(alphabet):
     library = {}
     for i, letter in enumerate(alphabet):
         library[letter] = str(i).zfill(2)
@@ -59,4 +63,3 @@ def main():
 
     print(encodedMessage)
 
-main()
