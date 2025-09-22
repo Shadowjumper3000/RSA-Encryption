@@ -1,6 +1,6 @@
 """
 RSA Key Generation
-This program generates a pair of RSA keys using precomputed prime numbers.
+This module generates a pair of RSA keys using precomputed prime numbers.
 The primes are chosen to be large enough to handle our maximum message size.
 """
 
@@ -57,15 +57,17 @@ def gcd(a: int, b: int) -> int:
 
 def generate_keys() -> tuple:
     """
-    Generate RSA key pair using the largest available prime numbers.
-    This ensures consistent key sizes large enough for our messages.
+    Generate RSA key pair using randomly selected prime numbers.
+    This provides variation in key sizes while maintaining security.
 
     Returns:
         tuple: ((n, e), (n, d)) - public and private key pairs
     """
-    # Always use the two largest primes
-    prime_one = PRIME_NUMBERS[-1]  # 33037
-    prime_two = PRIME_NUMBERS[-2]  # 33029
+    import random
+
+    # Randomly select two different primes
+    selected_primes = random.sample(PRIME_NUMBERS, 2)
+    prime_one, prime_two = selected_primes
 
     # Calculate modulus n (approximately 1.09 billion)
     modulus = prime_one * prime_two
