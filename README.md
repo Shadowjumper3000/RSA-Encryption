@@ -185,26 +185,11 @@ git clone https://github.com/Shadowjumper3000/RSA-Encryption.git
 cd RSA-Encryption
 
 # Create virtual environment (optional)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv .venv
+source .venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install development dependencies (optional)
 pip install -r requirements.txt
-```
-
-### Code Quality Tools
-
-The project supports several code quality tools (install them via requirements.txt):
-
-```bash
-# Format code with black
-black rsa_encryption/ tests/ main.py
-
-# Lint with flake8
-flake8 rsa_encryption/ tests/ main.py
-
-# Type checking and linting with pylint
-pylint rsa_encryption/ main.py
 ```
 
 ## Requirements
